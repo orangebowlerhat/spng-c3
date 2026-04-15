@@ -7,7 +7,11 @@ The binding data was generated with GNOME's girtools and converted with pyramid.
 
 ## Usage
 
-The binding is one file, compile it along with any other source files. The module name is 'spng'. There are two ways to link. Firstly, you can add "spng" to project.json as a linked library. Most linux distros include libspng by default. Secondly, given that libspng is designed to be small and portable, it is written as only one C file. You can simply add that one file to the project as a c-source file.
+The binding is one file, compile it along with any other source files. The module name is 'spng'. There are two ways to link.
+
+Firstly, you can add "spng" to project.json as a linked library. Most linux distros include libspng by default.
+
+Secondly, given that libspng is designed to be small and portable, it is written as only one C file. You can simply add that one file to the project as a c-source file.
 
 spng depends on zlib. This is a very common library and almost every linux distro will already have this installed. Add it to project.json as a linked library called simply "z".
 
