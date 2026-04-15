@@ -32,7 +32,7 @@ fn bool load_png (String path) {
 
 			spng::Format spngFmt;
 			int width = pngHdr.width;
-			tex.height = pngHdr.height;
+			int height = pngHdr.height;
 
 			switch (pngHdr.color_type) {
 				case ColorType.GRAYSCALE:
@@ -49,13 +49,13 @@ fn bool load_png (String path) {
 					break;
 			}
 
-      usz size;
+      		usz size;
 			spng.decoded_image_size (spngFmt, &size);
 			char* pixels = libc::malloc (size);
 
 			if (pixels) {
 				spng.decode_image (pixels, size, spngFmt, 0);
-        libc::free (pixels);
+        		libc::free (pixels);
 				return true;
 			}
 		}
