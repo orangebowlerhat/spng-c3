@@ -3,7 +3,7 @@ A c3 binding for libspng/spng.c, a simple PNG file reader and writer. It has a l
 
 https://libspng.org/
 
-The binding data was generated with GNOME's girtools and converted with pyramid. Most of the interface is methods attached to a spng::Context object. This should be allocated with spng::new or spng::new2, and freed with spng::Context.free rather than using c3 memory allocation.
+The binding data was generated with GNOME's girtools and converted with pyramid. Most of the interface is methods attached to a spng::Context object. The library does its own memory management so this object should be allocated with `spng::new` or `spng::new2`, and freed with `spng::Context.free` rather than using c3 memory allocation.
 
 ## Usage
 
@@ -13,9 +13,10 @@ Firstly, you can add "spng" to project.json as a linked library. Most linux dist
 
 Secondly, given that libspng is designed to be small and portable, it is written as only one C file. You can simply add that one file to the project as a c-source file.
 
-spng depends on zlib. This is a very common library and almost every linux distro will already have this installed. Add it to project.json as a linked library called simply "z".
+spng optionally uses zlib. This is a very common library and almost every linux distro will already have this installed. Add it to project.json as a linked library called simply "z".
 
-### Example code
+## Example code
+The example reads an image from an open file into a buffer. Typically the decoded image would be loaded into a graphics API after loading, OpenGL, Vulkan, SDL or similar. In this case it is simply removed from RAM again. Note that it uses a libc file handle, not a c3 file object.
 ```
 fn bool load_png (String path) {
 	spng::Context *spng = spng::new (0);
@@ -64,4 +65,5 @@ fn bool load_png (String path) {
 	return false;
 }
 ```
-The example simply reads an image into a buffer and throws it away again. The example reads a file but libspng can also write PNG files. Full documentation is available [here](https://libspng.org/docs/).
+The library can parse a PNG image that is already in RAM, when it is loaded from a resource, over a network, or by some other similar method.
+libspng also writes PNG files with a similar process. Full documentation is available [here](https://libspng.org/docs/).
