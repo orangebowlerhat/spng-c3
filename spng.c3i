@@ -7,7 +7,7 @@ const CUInt VERSION_MAJOR = 0;
 const CUInt VERSION_MINOR = 7;
 const CUInt VERSION_PATCH = 0;
 
-enum Errno: const inline CInt {
+constdef Errno: inline CInt {
 	IO_ERROR = -2,
 	IO_EOF = -1,
 	OK = 0,
@@ -98,13 +98,13 @@ enum Errno: const inline CInt {
 	ENOTFINAL,
 }
 
-enum TextType: const inline CInt {
+constdef TextType: inline CInt {
 	TEXT = 1,
 	ZTXT = 2,
 	ITXT = 3
 }
 
-enum ColorType: const inline CInt {
+constdef ColorType: inline CInt {
 	GRAYSCALE = 0,
 	TRUECOLOR = 2,
 	INDEXED = 3,
@@ -112,7 +112,7 @@ enum ColorType: const inline CInt {
 	TRUECOLOR_ALPHA = 6
 }
 
-enum Filter: const inline CInt {
+constdef Filter: inline CInt {
 	NONE = 0,
 	SUB = 1,
 	UP = 2,
@@ -120,7 +120,7 @@ enum Filter: const inline CInt {
 	PAETH = 4
 }
 
-enum FilterChoice: const inline CInt {
+constdef FilterChoice: inline CInt {
 	DISABLE_FILTERING = 0,
 	NONE = 8,
 	SUB = 16,
@@ -130,13 +130,13 @@ enum FilterChoice: const inline CInt {
 	ALL = (8|16|32|64|128)
 }
 
-enum InterlaceNethod: const inline CInt {
+constdef InterlaceNethod: inline CInt {
 	NONE = 0,
 	ADAM7 = 1
 }
 
 /* Channels are always in byte-order */
-enum Format: const inline CInt {
+constdef Format: inline CInt {
 	RGBA8 = 1,
 	RGBA16 = 2,
 	RGB8 = 4,
@@ -151,12 +151,12 @@ enum Format: const inline CInt {
 	RAW = 512  /* big-endian */
 }
 
-enum CtxFlags: const inline CInt {
+constdef CtxFlags: inline CInt {
 	IGNORE_ADLER32 = 1, /* Ignore checksum in DEFLATE streams */
 	ENCODER = 2 /* Create an encoder context */
 }
 
-enum DecodeFlags: const inline CInt {
+constdef DecodeFlags: inline CInt {
 	USE_TRNS = 1, /* Deprecated */
 	USE_GAMA = 2, /* Deprecated */
 	USE_SBIT = 8, /* Undocumented */
@@ -166,7 +166,7 @@ enum DecodeFlags: const inline CInt {
 	PROGRESSIVE = 256 /* Initialize for progressive reads */
 }
 
-enum CrcAction: const inline CInt {
+constdef CrcAction: inline CInt {
 	/* Default for critical chunks */
 	ERROR = 0,
 
@@ -179,7 +179,7 @@ enum CrcAction: const inline CInt {
 	USE = 2
 }
 
-enum EncodeFlags: const inline CInt {
+constdef EncodeFlags: inline CInt {
 	PROGRESSIVE = 1, /* Initialize for progressive writes */
 	FINALIZE = 2, /* Finalize PNG after encoding image */
 }
@@ -325,7 +325,7 @@ struct Chunk {
 	CUInt crc;
 }
 
-enum Location: const inline CInt {
+constdef Location: inline CInt {
 	AFTER_IHDR = 1,
 	AFTER_PLTE = 2,
 	AFTER_IDAT = 8,
@@ -338,7 +338,7 @@ struct UnknownChunk {
 	Location location;
 }
 
-enum Option: const inline CInt {
+constdef Option: inline CInt {
 	KEEP_UNKNOWN_CHUNKS = 1,
 
 	IMG_COMPRESSION_LEVEL,
@@ -381,93 +381,93 @@ alias ReadFn = fn CInt (Context* ctx, void* user, void* dest, usz length);
 alias WriteFn = fn CInt (Context* ctx, void* user, void* src, usz length);
 alias RwFn = fn CInt (Context* ctx, void* user, void* dst_src, usz length);
 
-extern fn Context* new (CInt flags) @extern ("spng_ctx_new");
-extern fn Context* new2 (Alloc* alloc, CInt flags) @extern ("spng_ctx_new2");
-extern fn void Context.free (Context* ctx) @extern ("spng_ctx_free");
+extern fn Context* new (CInt flags) @cname ("spng_ctx_new");
+extern fn Context* new2 (Alloc* alloc, CInt flags) @cname ("spng_ctx_new2");
+extern fn void Context.free (Context* ctx) @cname ("spng_ctx_free");
 
-extern fn CInt Context.set_png_buffer (Context* ctx, void* buf, usz size) @extern ("spng_set_png_buffer");
-extern fn CInt Context.set_png_stream (Context* ctx, RwFn* rw_func, void* user) @extern ("spng_set_png_stream");
-extern fn CInt Context.set_png_file (Context* ctx, CFile* file) @extern ("spng_set_png_file");
+extern fn CInt Context.set_png_buffer (Context* ctx, void* buf, usz size) @cname ("spng_set_png_buffer");
+extern fn CInt Context.set_png_stream (Context* ctx, RwFn* rw_func, void* user) @cname ("spng_set_png_stream");
+extern fn CInt Context.set_png_file (Context* ctx, CFile* file) @cname ("spng_set_png_file");
 
-extern fn void* Context.get_png_buffer (Context* ctx, usz* len, CInt* error) @extern ("spng_get_png_buffer");
+extern fn void* Context.get_png_buffer (Context* ctx, usz* len, CInt* error) @cname ("spng_get_png_buffer");
 
-extern fn CInt Context.set_image_limits (Context* ctx, CUInt width, CUInt height) @extern ("spng_set)image_limits");
-extern fn CInt Context.get_image_limits (Context* ctx, CUInt* width, CUInt* height) @extern ("spng_get)image_limits");
+extern fn CInt Context.set_image_limits (Context* ctx, CUInt width, CUInt height) @cname ("spng_set)image_limits");
+extern fn CInt Context.get_image_limits (Context* ctx, CUInt* width, CUInt* height) @cname ("spng_get)image_limits");
 
-extern fn CInt Context.set_chunk_limits (Context* ctx, usz chunk_size, usz cache_size) @extern ("spng_set_chunk_limits");
-extern fn CInt Context.get_chunk_limits (Context* ctx, usz* chunk_size, usz* cache_size) @extern ("spng_get_chunk_limits");
+extern fn CInt Context.set_chunk_limits (Context* ctx, usz chunk_size, usz cache_size) @cname ("spng_set_chunk_limits");
+extern fn CInt Context.get_chunk_limits (Context* ctx, usz* chunk_size, usz* cache_size) @cname ("spng_get_chunk_limits");
 
-extern fn CInt Context.set_crc_action (Context* ctx, CInt critical, CInt ancillary) @extern ("spng_set)crc_action");
+extern fn CInt Context.set_crc_action (Context* ctx, CInt critical, CInt ancillary) @cname ("spng_set)crc_action");
 
-extern fn CInt Context.set_option (Context* ctx, Option option, CInt value) @extern ("spng_set_option");
-extern fn CInt Context.get_option (Context* ctx, Option option, CInt* value) @extern ("spng_get_option");
+extern fn CInt Context.set_option (Context* ctx, Option option, CInt value) @cname ("spng_set_option");
+extern fn CInt Context.get_option (Context* ctx, Option option, CInt* value) @cname ("spng_get_option");
 
-extern fn CInt Context.decoded_image_size (Context* ctx, CInt fmt, usz* len) @extern ("spng_decoded_image_size");
+extern fn CInt Context.decoded_image_size (Context* ctx, CInt fmt, usz* len) @cname ("spng_decoded_image_size");
 
 /* Decode */
-extern fn CInt Context.decode_image (Context* ctx, void* out, usz len, CInt fmt, CInt flags) @extern ("spng_decode_image");
+extern fn CInt Context.decode_image (Context* ctx, void* out, usz len, CInt fmt, CInt flags) @cname ("spng_decode_image");
 
 /* Progressive decode */
-extern fn CInt Context.decode_scanline (Context* ctx, void* out, usz len) @extern ("spng_decode_scanline");
-extern fn CInt Context.decode_row (Context* ctx, void* out, usz len) @extern ("spng_decode_row");
-extern fn CInt Context.decode_chunks (Context* ctx) @extern ("spng_decode_chunks");
+extern fn CInt Context.decode_scanline (Context* ctx, void* out, usz len) @cname ("spng_decode_scanline");
+extern fn CInt Context.decode_row (Context* ctx, void* out, usz len) @cname ("spng_decode_row");
+extern fn CInt Context.decode_chunks (Context* ctx) @cname ("spng_decode_chunks");
 
 /* Encode/decode */
-extern fn CInt Context.get_row_info (Context* ctx, RowInfo* row_info) @extern ("spng_get_row_info");
+extern fn CInt Context.get_row_info (Context* ctx, RowInfo* row_info) @cname ("spng_get_row_info");
 
 /* Encode */
-extern fn CInt Context.encode_image (Context* ctx, void* img, usz len, CInt fmt, CInt flags) @extern ("spng_encode_image");
+extern fn CInt Context.encode_image (Context* ctx, void* img, usz len, CInt fmt, CInt flags) @cname ("spng_encode_image");
 
 /* Progressive encode */
-extern fn CInt Context.encode_scanline (Context* ctx, void* scanline, usz len) @extern ("spng_encode_scanline");
-extern fn CInt Context.encode_row (Context* ctx, void* row, usz len) @extern ("spng_encode_row");
-extern fn CInt Context.encode_chunks (Context* ctx) @extern ("spng_encode_chunks");
+extern fn CInt Context.encode_scanline (Context* ctx, void* scanline, usz len) @cname ("spng_encode_scanline");
+extern fn CInt Context.encode_row (Context* ctx, void* row, usz len) @cname ("spng_encode_row");
+extern fn CInt Context.encode_chunks (Context* ctx) @cname ("spng_encode_chunks");
 
-extern fn CInt Context.get_ihdr  (Context* ctx, Ihdr* ihdr) @extern ("spng_get_ihdr");
-extern fn CInt Context.get_plte (Context* ctx, Plte* plte) @extern ("spng_get_plte");
-extern fn CInt Context.get_trns (Context* ctx, Trns* trns) @extern ("spng_get_trns");
-extern fn CInt Context.get_chrm (Context* ctx, Chrm* chrm) @extern ("spng_get_chrm");
-extern fn CInt Context.get_chrm_int (Context* ctx, ChrmInt* chrm_int) @extern ("spng_chrm_int");
-extern fn CInt Context.get_gama (Context* ctx, double* gamma) @extern ("spng_gama");
-extern fn CInt Context.get_gama_int (Context* ctx, CUInt* gama_int) @extern ("spng_gama_int");
-extern fn CInt Context.get_iccp (Context* ctx, Iccp* iccp) @extern ("spng_get_iccp");
-extern fn CInt Context.get_sbit (Context* ctx, Sbit* sbit) @extern ("spng_get_sbit");
-extern fn CInt Context.get_srgb (Context* ctx, ZString rendering_intent) @extern ("spng_get_srgb");
-extern fn CInt Context.get_text (Context* ctx, Text* text, CUInt* n_text) @extern ("spng_get_text");
-extern fn CInt Context.get_bkgd (Context* ctx, Bkgd* bkgd) @extern ("spng_get_bkgd");
-extern fn CInt Context.get_hist (Context* ctx, Hist* hist) @extern ("spng_get_hist");
-extern fn CInt Context.get_phys (Context* ctx, Phys* phys) @extern ("spng_get_phys");
-extern fn CInt Context.get_splt (Context* ctx, Splt* splt, CUInt* n_splt) @extern ("spng_get_splt");
-extern fn CInt Context.get_time (Context* ctx, Time* time) @extern ("spng_get_time");
-extern fn CInt Context.get_unknown_chunks (Context* ctx, UnknownChunk* chunks, CUInt* n_chunks) @extern ("spng_get_unknown_chunks");
-
-/* Official extensions */
-extern fn CInt Context.get_offs (Context* ctx, Offs* offs) @extern ("spng_get_offs");
-extern fn CInt Context.get_exif (Context* ctx, Exif* exif) @extern ("spng_get_exif");
-
-
-extern fn CInt Context.set_ihdr (Context* ctx, Ihdr* ihdr) @extern ("spng_set_ihdr");
-extern fn CInt Context.set_plte (Context* ctx, Plte* plte) @extern ("spng_set_plte");
-extern fn CInt Context.set_trns (Context* ctx, Trns* trns) @extern ("spng_set_trns");
-extern fn CInt Context.set_chrm (Context* ctx, Chrm* chrm) @extern ("spng_set_chrm");
-extern fn CInt Context.set_chrm_int (Context* ctx, ChrmInt* chrm_int) @extern ("spng_set_chrm_int");
-extern fn CInt Context.set_gama (Context* ctx, double gamma) @extern ("spng_set_gama");
-extern fn CInt Context.set_gama_int (Context* ctx, CUInt gamma) @extern ("spng_set_gama_int");
-extern fn CInt Context.set_iccp (Context* ctx, Iccp* iccp) @extern ("spng_set_iccp");
-extern fn CInt Context.set_sbit (Context* ctx, Sbit* sbit) @extern ("spng_set_sbit");
-extern fn CInt Context.set_srgb (Context* ctx, CChar rendering_intent) @extern ("spng_set_srgb");
-extern fn CInt Context.set_text (Context* ctx, Text* text, CUInt n_text) @extern ("spng_set_text");
-extern fn CInt Context.set_bkgd (Context* ctx, Bkgd* bkgd) @extern ("spng_set_bkgd");
-extern fn CInt Context.set_hist (Context* ctx, Hist* hist) @extern ("spng_set_hist");
-extern fn CInt Context.set_phys (Context* ctx, Phys* phys) @extern ("spng_set_phys");
-extern fn CInt Context.set_splt (Context* ctx, Splt* splt, CUInt n_splt) @extern ("spng_set_splt");
-extern fn CInt Context.set_time (Context* ctx, Time* time) @extern ("spng_set_time");
-extern fn CInt Context.set_unknown_chunks (Context* ctx, UnknownChunk* chunks, CUInt n_chunks) @extern ("spng_set_unknown_chunks");
+extern fn CInt Context.get_ihdr  (Context* ctx, Ihdr* ihdr) @cname ("spng_get_ihdr");
+extern fn CInt Context.get_plte (Context* ctx, Plte* plte) @cname ("spng_get_plte");
+extern fn CInt Context.get_trns (Context* ctx, Trns* trns) @cname ("spng_get_trns");
+extern fn CInt Context.get_chrm (Context* ctx, Chrm* chrm) @cname ("spng_get_chrm");
+extern fn CInt Context.get_chrm_int (Context* ctx, ChrmInt* chrm_int) @cname ("spng_chrm_int");
+extern fn CInt Context.get_gama (Context* ctx, double* gamma) @cname ("spng_gama");
+extern fn CInt Context.get_gama_int (Context* ctx, CUInt* gama_int) @cname ("spng_gama_int");
+extern fn CInt Context.get_iccp (Context* ctx, Iccp* iccp) @cname ("spng_get_iccp");
+extern fn CInt Context.get_sbit (Context* ctx, Sbit* sbit) @cname ("spng_get_sbit");
+extern fn CInt Context.get_srgb (Context* ctx, ZString rendering_intent) @cname ("spng_get_srgb");
+extern fn CInt Context.get_text (Context* ctx, Text* text, CUInt* n_text) @cname ("spng_get_text");
+extern fn CInt Context.get_bkgd (Context* ctx, Bkgd* bkgd) @cname ("spng_get_bkgd");
+extern fn CInt Context.get_hist (Context* ctx, Hist* hist) @cname ("spng_get_hist");
+extern fn CInt Context.get_phys (Context* ctx, Phys* phys) @cname ("spng_get_phys");
+extern fn CInt Context.get_splt (Context* ctx, Splt* splt, CUInt* n_splt) @cname ("spng_get_splt");
+extern fn CInt Context.get_time (Context* ctx, Time* time) @cname ("spng_get_time");
+extern fn CInt Context.get_unknown_chunks (Context* ctx, UnknownChunk* chunks, CUInt* n_chunks) @cname ("spng_get_unknown_chunks");
 
 /* Official extensions */
-extern fn CInt Context.set_offs (Context* ctx, Offs* offs) @extern ("spng_set_offs");
-extern fn CInt Context.set_exif (Context* ctx, Exif* exif) @extern ("spng_set_exif");
+extern fn CInt Context.get_offs (Context* ctx, Offs* offs) @cname ("spng_get_offs");
+extern fn CInt Context.get_exif (Context* ctx, Exif* exif) @cname ("spng_get_exif");
 
 
-extern fn ZString strerror (CInt err) @extern ("spng_strerror");
-extern fn ZString version_string () @extern ("spng_version_string");
+extern fn CInt Context.set_ihdr (Context* ctx, Ihdr* ihdr) @cname ("spng_set_ihdr");
+extern fn CInt Context.set_plte (Context* ctx, Plte* plte) @cname ("spng_set_plte");
+extern fn CInt Context.set_trns (Context* ctx, Trns* trns) @cname ("spng_set_trns");
+extern fn CInt Context.set_chrm (Context* ctx, Chrm* chrm) @cname ("spng_set_chrm");
+extern fn CInt Context.set_chrm_int (Context* ctx, ChrmInt* chrm_int) @cname ("spng_set_chrm_int");
+extern fn CInt Context.set_gama (Context* ctx, double gamma) @cname ("spng_set_gama");
+extern fn CInt Context.set_gama_int (Context* ctx, CUInt gamma) @cname ("spng_set_gama_int");
+extern fn CInt Context.set_iccp (Context* ctx, Iccp* iccp) @cname ("spng_set_iccp");
+extern fn CInt Context.set_sbit (Context* ctx, Sbit* sbit) @cname ("spng_set_sbit");
+extern fn CInt Context.set_srgb (Context* ctx, CChar rendering_intent) @cname ("spng_set_srgb");
+extern fn CInt Context.set_text (Context* ctx, Text* text, CUInt n_text) @cname ("spng_set_text");
+extern fn CInt Context.set_bkgd (Context* ctx, Bkgd* bkgd) @cname ("spng_set_bkgd");
+extern fn CInt Context.set_hist (Context* ctx, Hist* hist) @cname ("spng_set_hist");
+extern fn CInt Context.set_phys (Context* ctx, Phys* phys) @cname ("spng_set_phys");
+extern fn CInt Context.set_splt (Context* ctx, Splt* splt, CUInt n_splt) @cname ("spng_set_splt");
+extern fn CInt Context.set_time (Context* ctx, Time* time) @cname ("spng_set_time");
+extern fn CInt Context.set_unknown_chunks (Context* ctx, UnknownChunk* chunks, CUInt n_chunks) @cname ("spng_set_unknown_chunks");
+
+/* Official extensions */
+extern fn CInt Context.set_offs (Context* ctx, Offs* offs) @cname ("spng_set_offs");
+extern fn CInt Context.set_exif (Context* ctx, Exif* exif) @cname ("spng_set_exif");
+
+
+extern fn ZString strerror (CInt err) @cname ("spng_strerror");
+extern fn ZString version_string () @cname ("spng_version_string");
