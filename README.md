@@ -3,7 +3,7 @@ A c3 binding for libspng/spng.c, a simple PNG file reader and writer. It has a l
 
 https://libspng.org/
 
-The binding data was generated with GNOME's girtools and converted with pyramid. Most of the interface is methods attached to a spng::Context object. The library does its own memory management so this object should be allocated with `spng::new` or `spng::new2`, and freed with `spng::Context.free` rather than using c3 memory allocation.
+The majority of the interface is methods of a spng::Context object. The library does its own memory management so this object should be allocated with `spng::new` or `spng::new2`, and freed with `spng::Context.free` rather than using c3 memory allocation.
 
 ## Usage
 
