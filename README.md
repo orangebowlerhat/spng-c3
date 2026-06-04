@@ -16,7 +16,7 @@ Secondly, given that libspng is designed to be small and portable, it is written
 spng optionally uses zlib. This is a very common library and almost every linux distro will already have this installed. Add it to project.json as a linked library called simply "z".
 
 ## Example code
-The example reads an image from an open file into a buffer. Typically the decoded image would be loaded into a graphics API after loading, OpenGL, Vulkan, SDL or similar. In this case it is simply removed from RAM again. Note that it uses a libc file handle, not a c3 file object.
+The example reads an image from an open file into a buffer. The decoded image would then be loaded into a graphics API, OpenGL, Vulkan, SDL or something similar. In this case it is simply removed from RAM again. Note that the library uses a libc file handle, not a c3 file object.
 ```
 fn bool load_png (String path) {
 	spng::Context *spng = spng::new (0);
@@ -65,5 +65,5 @@ fn bool load_png (String path) {
 	return false;
 }
 ```
-The library can parse a PNG image that is already in RAM, when it is loaded from a resource, over a network, or by some other similar method.
-libspng also writes PNG files with a similar process. Full documentation is available [here](https://libspng.org/docs/).
+The library can also parse a PNG image that is already in RAM, if it is loaded from a resource for example, or over a network.
+The process of saving a PNG file is equally simplified. Full documentation is available [here](https://libspng.org/docs/).
